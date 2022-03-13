@@ -151,6 +151,10 @@ knitr::include_graphics("figures/deviate_non_monotonic_absolute_08.png")
 
 * Interaction of treatment with the linear predictor using restricted cubic splines
 
+<br>
+
+* Adaptive approach using AIC
+
 ---
 
 # Evaluation metrics
@@ -239,3 +243,50 @@ knitr::include_graphics("figures/calibration_moderate_sample_size.png")
 ```
 ]
 ]
+
+---
+
+# GUSTO-I
+
+.panelset[
+.panel[.panel-name[Data]
+* Total of 30,510 patients with MI
+* 10,348 patients randomized to tissue plasminogen activator (tPA)
+* 20,162 patients randomized to streptokinase
+* _Outcome_: 30-day mortality
+
+<br>
+
+* Logistic regression model with 6 covariates:
+  * age
+  * Killip class
+  * systolic blood pressure
+  * heart rate
+  * previous MI
+  * location of MI
+
+]
+.panel[.panel-name[Predicted benefit]
+```{r, eval=TRUE, echo=FALSE, out.height = '100%'}
+knitr::include_graphics("figures/gusto.png")
+```
+]
+]
+
+---
+
+# Conclusions
+
+* Linear interaction model is a viable option with smaller sample size and/or moderately performing risk prediction models
+
+<br>
+
+* RCS-3 is a better option when non-monotonic deviations from a constant treatment effect and/or substantial treatment-related harms are anticipated
+
+<br>
+
+* Increasing the number of RCS knots does not translate to improved benefit prediction
+
+<br>
+
+* An adaptive AIC approach is a viable option with larger sample sizes---quite conservative with smaller samples

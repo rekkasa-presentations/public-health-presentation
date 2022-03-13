@@ -1,3 +1,6 @@
+data/raw/gusto.rda : code/GetGustoData.sh
+	$<
+
 figures/deviate_linear_08.png : code/PlotDeviations.R\
 	code/helpers/PlotGammas.R\
 	data/processed/analysisIds.csv\
@@ -68,7 +71,12 @@ figures/calibration_moderate_auc.png : code/CalibrationBase.R\
 	data/processed/calibration.csv
 	$< moderate 4250 0.85 auc
 
+figures/gusto.png : code/GustoPlot.R\
+	data/raw/gusto.rda
+	$<
+
 index.html : index.Rmd\
+  figures/gusto.png\
   figures/rmse_moderate_base.png\
   figures/deviate_linear_08.png\
   figures/rmse_moderate_sample_size.png\

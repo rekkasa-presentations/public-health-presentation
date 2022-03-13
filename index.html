@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Predicting benefit</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Alexandros Rekkas" />
+    <meta name="date" content="2022-03-13" />
+    <script src="libs/header-attrs-2.13/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <link href="libs/panelset-0.2.6/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset-0.2.6/panelset.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Predicting benefit
+## A risk-based approach
+### Alexandros Rekkas
+### Department of Medical Informatics, EMC
+### 2022-03-13
+
+---
+
+
+
+
+# Predictive approaches to HTE
+
+.panelset[
+.panel[.panel-name[Risk-based]
+- Reference: risk factors
+- Viable option in the absence of well-established effect modifiers
+- Two-step approaches:
+  - Prediction of baseline risk
+  - Evalution of treatment effect within risk strata
+]
+.panel[.panel-name[Treatment effect modeling]
+- Reference: Risk factors and effect modifiers
+- High risk of overfitting
+]
+.panel[.panel-name[Optimal treatment rules]
+- Reference: Effect modifiers
+- Focus on development of treatment assignment rules
+]
+]
+
+---
+
+class: center middle
+
+# Simulation study
+
+---
+
+# Settings
+
+.panelset[
+.panel[.panel-name[Patients]
+For each patient we simulated 8 baseline covariates:
+- `\(X_1, \dots, X_4\)` were continuous (standard normal) 
+- `\(X_5,\dots,X_8\)` were binary with 20% prevalence 
+- Treatment ( `\(T\)` ) was allocated using a 50:50 split
+]
+.panel[.panel-name[Baseline risk]
+.pull-left[
+For the _base-case_ scenario
+- AUC: 0.75
+- Event rate: 20%
+]
+.pull-right[
+_Deviation_ scenarios:
+- High AUC (0.85)
+- Low AUC (0.65)
+- Event rate: fixed at 20%
+]
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+&gt; &amp;#9964; All covariates were risk factors &lt;br&gt;
+&gt;
+&amp;#9964; In all simulation runs a correctly-specified logistic regression model was used
+&gt;
+
+]
+.panel[.panel-name[Treatment effect]
+_Base-case_ scenario: constant relative treatment effect (OR = 0.8)
+
+&lt;br&gt;
+
+_Deviation_ scenarios:
+- Effect size (absent, stronger)
+- Linear and non-linear deviations
+- Treatment-related harms
+]
+]
+
+---
+
+# More on deviations
+
+.panelset[
+.panel[.panel-name[Linear]
+.pull-left[
+&lt;img src="figures/deviate_linear_08.png" width="80%" /&gt;
+]
+.pull-right[
+&lt;img src="figures/deviate_linear_absolute_08.png" width="80%" /&gt;
+]
+]
+.panel[.panel-name[Quadratic]
+.pull-left[
+&lt;img src="figures/deviate_quadratic_08.png" width="80%" /&gt;
+]
+.pull-right[
+&lt;img src="figures/deviate_quadratic_absolute_08.png" width="80%" /&gt;
+]
+]
+.panel[.panel-name[Non-monotonic]
+.pull-left[
+&lt;img src="figures/deviate_non_monotonic_08.png" width="80%" /&gt;
+]
+.pull-right[
+&lt;img src="figures/deviate_non_monotonic_absolute_08.png" width="80%" /&gt;
+]
+]
+]
+
+---
+
+# Methods to individualize
+
+* A constant treatment effect
+
+&lt;br&gt;
+
+* Stratification
+
+&lt;br&gt;
+
+* Linear interaction of treatment with the linear predictor
+
+&lt;br&gt;
+
+* Interaction of treatment with the linear predictor using restricted cubic splines
+
+---
+
+# Evaluation metrics
+
+* Root mean squared error
+`$$\text{RMSE}=\sqrt{\frac{1}{n}\sum_{i=1}^n\big(\tau(x_i) - \hat{\tau}(x_i)\big)^2}$$`
+
+&lt;br&gt;
+
+* Discrimination for benefit
+&gt; The probability
+&gt; that from two randomly chosen matched patient pairs with unequal observed
+&gt; benefit, the pair with greater observed benefit also has a higher predicted
+&gt; benefit
+
+&lt;br&gt;
+
+* Calibration for benefit
+&gt; The observed benefits are regressed on
+&gt; the predicted benefits using a locally weighted scatterplot smoother (loess).
+&gt; The ICI-for-benefit is the average absolute difference between predicted and
+&gt; smooth observed benefit. Values closer to `\(0\)` represent better calibration.
+
+---
+
+# Results (RMSE)
+
+.panelset[
+.panel[.panel-name[Base]
+&lt;img src="figures/rmse_moderate_base.png" width="7200" height="100%" /&gt;
+]
+.panel[.panel-name[AUC]
+&lt;img src="figures/rmse_moderate_auc.png" width="7200" height="100%" /&gt;
+]
+.panel[.panel-name[Sample size]
+&lt;img src="figures/rmse_moderate_sample_size.png" width="7200" height="100%" /&gt;
+]
+]
+
+---
+
+# Results (Discrimination)
+
+.panelset[
+.panel[.panel-name[Base]
+&lt;img src="figures/discrimination_moderate_base.png" width="7200" height="100%" /&gt;
+]
+.panel[.panel-name[AUC]
+&lt;img src="figures/discrimination_moderate_auc.png" width="7200" height="100%" /&gt;
+]
+.panel[.panel-name[Sample size]
+&lt;img src="figures/discrimination_moderate_sample_size.png" width="7200" height="100%" /&gt;
+]
+]
+
+---
+
+# Results (Calibration)
+
+.panelset[
+.panel[.panel-name[Base]
+&lt;img src="figures/calibration_moderate_base.png" width="7200" height="100%" /&gt;
+]
+.panel[.panel-name[AUC]
+&lt;img src="figures/calibration_moderate_auc.png" width="7200" height="100%" /&gt;
+]
+.panel[.panel-name[Sample size]
+&lt;img src="figures/calibration_moderate_sample_size.png" width="7200" height="100%" /&gt;
+]
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,6 +1,5 @@
 ---
-title: "Predicting benefit"
-subtitle: "A risk-based approach"
+title: "Individualized treatment effect was predicted best by modeling baseline risk in interaction with treatment assignment"
 author: "Alexandros Rekkas"
 institute: "Department of Medical Informatics, EMC"
 date: "`r Sys.Date()`"
@@ -320,10 +319,10 @@ knitr::include_graphics("figures/gusto.png")
 
 # Links
 
-* All the code to the simulations can be found at:
+* All the code for the simulations can be found at:
 https://github.com/rekkasa/arekkas_HteSimulation_XXXX_2021
 
 <br>
 
-* All the simulation can be explored using a shiny application:
+* All the simulation results can be explored using a shiny application:
 https://arekkas.shinyapps.io/simulation_viewer/

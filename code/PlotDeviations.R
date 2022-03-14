@@ -79,7 +79,8 @@ generatePlot <- function(scenarios, analysisIds) {
       axis.text    = element_text(size = 19),
       axis.title   = element_text(size = 21),
       legend.text  = element_text(size = 15),
-      legend.title = element_blank()
+      legend.title = element_blank(),
+      legend.position = c(.85, .1)
     )
   
   return(p)
@@ -138,10 +139,11 @@ generateAbsolutePlot <- function(scenarios, analysisIds) {
       breaks = c("base-case", "moderate", "high", "non-monotonic")
     ) +
     theme(
-      axis.text = element_text(size = 23),
-      axis.title = element_text(size = 25),
-      legend.text = element_text(size = 20),
-      legend.title = element_blank()
+      axis.text    = element_text(size = 19),
+      axis.title   = element_text(size = 21),
+      legend.text  = element_text(size = 15),
+      legend.title = element_blank(),
+      legend.position = c(.85, .1)
     ) 
   return(p)
 }

@@ -24,17 +24,29 @@ xaringanExtra::use_panelset()
 .panelset[
 .panel[.panel-name[Risk-based]
 - Reference: risk factors
+
+<br>
+
 - Viable option in the absence of well-established effect modifiers
+
+<br>
+
 - Two-step approaches:
   - Prediction of baseline risk
   - Evalution of treatment effect within risk strata
 ]
 .panel[.panel-name[Treatment effect modeling]
 - Reference: Risk factors and effect modifiers
+
+<br>
+
 - High risk of overfitting
 ]
 .panel[.panel-name[Optimal treatment rules]
 - Reference: Effect modifiers
+
+<br>
+
 - Focus on development of treatment assignment rules
 ]
 ]
@@ -55,6 +67,19 @@ For each patient we simulated 8 baseline covariates:
 - $X_1, \dots, X_4$ were continuous (standard normal) 
 - $X_5,\dots,X_8$ were binary with 20% prevalence 
 - Treatment ( $T$ ) was allocated using a 50:50 split
+
+<br>
+
+.pull-left[
+For the _base-case_ scenario:
+- N = 4,250
+]
+
+.pull-right[
+_Deviation_ scenarios:
+- Smaller sample size (N = 1,063)
+- Larger sample size (N = 17,000)
+]
 ]
 .panel[.panel-name[Baseline risk]
 .pull-left[

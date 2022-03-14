@@ -80,6 +80,17 @@ names(scenarios) <- NULL
 
 plotList <- plotResult(scenarios, processed, titles, metric = metric, limits = c(0, 6, 1))
 
+left.grob <- grid::textGrob(
+    expression(
+      paste(
+        "Integrated calibration index (x",
+        10^-2,
+        ")"
+      )
+    ),
+    rot = 90
+)
+
 res <- gridExtra::grid.arrange(
   plotList[[1]] +
     theme(
@@ -123,7 +134,7 @@ res <- gridExtra::grid.arrange(
   heights = c(1, 1.05),
   nrow = 2,
   ncol = 2,
-  left = "Calibration for benefit"
+  left = left.grob
 )
 
 fileName <- paste0(

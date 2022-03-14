@@ -218,7 +218,7 @@ $$\text{RMSE}=\sqrt{\frac{1}{n}\sum_{i=1}^n\big(\tau(x_i) - \hat{\tau}(x_i)\big)
 
 <br>
 
-* Discrimination for benefit
+* Discrimination for benefit (C-for-benefit)
 > The probability
 > that from two randomly chosen matched patient pairs with unequal observed
 > benefit, the pair with greater observed benefit also has a higher predicted
@@ -226,10 +226,10 @@ $$\text{RMSE}=\sqrt{\frac{1}{n}\sum_{i=1}^n\big(\tau(x_i) - \hat{\tau}(x_i)\big)
 
 <br>
 
-* Calibration for benefit
+* Calibration for benefit (E-for-benefit)
 > The observed benefits are regressed on
 > the predicted benefits using a locally weighted scatterplot smoother (loess).
-> The ICI-for-benefit is the average absolute difference between predicted and
+> The E-for-benefit is the average absolute difference between predicted and
 > smooth observed benefit. Values closer to $0$ represent better calibration.
 
 ---

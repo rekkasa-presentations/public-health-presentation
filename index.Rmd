@@ -290,3 +290,15 @@ knitr::include_graphics("figures/gusto.png")
 <br>
 
 * An adaptive AIC approach is a viable option with larger sample sizes---quite conservative with smaller samples
+
+---
+
+# Links
+
+* All the code to the simulations can be found at:
+https://github.com/rekkasa/arekkas_HteSimulation_XXXX_2021
+
+<br>
+
+* All the simulation can be explored using a shiny application:
+https://arekkas.shinyapps.io/simulation_viewer/

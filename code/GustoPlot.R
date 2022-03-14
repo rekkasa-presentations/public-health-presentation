@@ -51,6 +51,11 @@ rcs3Model <- fitRcsHte(
   settings = createRcsSettings()
 )
 
+rcs4Model <- fitRcsHte(
+  data     = gusto,
+  settings = createRcsSettings(nKnots = 4)
+)
+
 plot <- ggplot() +
   geom_pointrange(
     data = stratified$data,
@@ -112,26 +117,45 @@ plot <- ggplot() +
       smoothFit = rcs3Model
     )
   ) +
+  stat_function(
+    data = data.frame(
+      x = c(0, maxRisk), 
+      label = "RCS 4 knots"
+    ),
+    aes(
+      x     = x,
+      color = label,
+      linetype = label
+    ),
+    size = .65,
+    fun  = predictSmoothBenefit,
+    args = list(
+      smoothFit = rcs4Model
+    )
+  ) +
   scale_color_manual(
     values = c(
       "#2274A5", 
       "#969A97",
       "#273043",
-      "#F15152"
+      "#F15152",
+      "orange"
     ),
     breaks = c(
       "Constant treatment effect",
       "Stratified",
       "Linear interaction",
-      "RCS 3 knots"
+      "RCS 3 knots",
+      "RCS 4 knots"
     )
   ) +
   scale_linetype_manual(
-    values = c("dashed", "solid", "solid"),
+    values = c("dashed", "solid", "solid", "solid"),
     breaks = c(
       "Constant treatment effect",
       "Linear interaction",
-      "RCS 3 knots"
+      "RCS 3 knots",
+      "RCS 4 knots"
     ),
     guide = "none"
   ) +
@@ -144,7 +168,7 @@ plot <- ggplot() +
     axis.text.y = ggplot2::element_text(size = 7),
     axis.title = ggplot2::element_text(size = 9),
     legend.text = element_text(size = 7),
-    legend.position = c(.17, .85)
+    legend.position = c(.17, .80)
   )
   
  ggplot2::ggsave(

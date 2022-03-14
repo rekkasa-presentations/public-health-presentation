@@ -181,6 +181,36 @@ knitr::include_graphics("figures/deviate_non_monotonic_absolute_08.png")
 
 ---
 
+# GUSTO-I
+
+.panelset[
+.panel[.panel-name[Data]
+* Total of 30,510 patients with MI
+* 10,348 patients randomized to tissue plasminogen activator (tPA)
+* 20,162 patients randomized to streptokinase
+* _Outcome_: 30-day mortality
+
+<br>
+
+* Logistic regression model with 6 covariates:
+  * age
+  * Killip class
+  * systolic blood pressure
+  * heart rate
+  * previous MI
+  * location of MI
+
+]
+.panel[.panel-name[Predicted benefit]
+```{r, eval=TRUE, echo=FALSE, out.height = '100%'}
+knitr::include_graphics("figures/gusto.png")
+```
+]
+]
+
+
+---
+
 # Evaluation metrics
 
 * Root mean squared error
@@ -270,38 +300,9 @@ knitr::include_graphics("figures/calibration_moderate_sample_size.png")
 
 ---
 
-# GUSTO-I
-
-.panelset[
-.panel[.panel-name[Data]
-* Total of 30,510 patients with MI
-* 10,348 patients randomized to tissue plasminogen activator (tPA)
-* 20,162 patients randomized to streptokinase
-* _Outcome_: 30-day mortality
-
-<br>
-
-* Logistic regression model with 6 covariates:
-  * age
-  * Killip class
-  * systolic blood pressure
-  * heart rate
-  * previous MI
-  * location of MI
-
-]
-.panel[.panel-name[Predicted benefit]
-```{r, eval=TRUE, echo=FALSE, out.height = '100%'}
-knitr::include_graphics("figures/gusto.png")
-```
-]
-]
-
----
-
 # Conclusions
 
-* Linear interaction model is a viable option with smaller sample size and/or moderately performing risk prediction models
+* The Linear interaction model is a viable option with smaller sample size and/or moderately performing risk prediction models
 
 <br>
 

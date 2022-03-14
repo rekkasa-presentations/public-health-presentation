@@ -302,7 +302,7 @@ knitr::include_graphics("figures/calibration_moderate_sample_size.png")
 
 # Conclusions
 
-* The Linear interaction model is a viable option with smaller sample size and/or moderately performing risk prediction models
+* The linear interaction model is a viable option with smaller sample size and/or moderately performing risk prediction models
 
 <br>
 

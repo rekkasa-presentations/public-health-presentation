@@ -70,19 +70,19 @@ plotList <- plotResult(scenarios, processed, titles, metric = metric, limits = c
 res <- gridExtra::grid.arrange(
   plotList[[1]] +
     theme(
-      plot.title = element_text(size = 7),
+      plot.title = element_text(size = 12),
       axis.title = element_blank(),
       legend.direction = "horizontal",
-      legend.title = element_text(size = 5.5),
-      legend.text = element_text(size = 5),
-      legend.position = c(.325, .862),
+      legend.title = element_text(size = 8.5),
+      legend.text = element_text(size = 7.5),
+      legend.position = c(.395, .922),
       panel.grid.minor = element_blank(),
       axis.text.x = element_blank(),
-      axis.text.y = element_text(size = 6)
+      axis.text.y = element_text(size = 9)
     ),
   plotList[[2]] +
     theme(
-      plot.title = element_text(size = 7),
+      plot.title = element_text(size = 12),
       axis.title = element_blank(),
       axis.text.x = element_blank(),
       axis.text.y = element_blank(),
@@ -91,18 +91,18 @@ res <- gridExtra::grid.arrange(
     ),
   plotList[[3]] +
     theme(
-      plot.title = element_text(size = 7),
+      plot.title = element_text(size = 12),
       axis.title = element_blank(),
-      axis.text.x = element_text(size = 6),
-      axis.text.y = element_text(size = 6),
+      axis.text.x = element_text(size = 9),
+      axis.text.y = element_text(size = 9),
       panel.grid.minor = element_blank(),
       legend.position = "none"
     ),
   plotList[[4]] +
     theme(
-      plot.title = element_text(size = 7),
+      plot.title = element_text(size = 12),
       axis.title = element_blank(),
-      axis.text.x = element_text(size = 6),
+      axis.text.x = element_text(size = 9),
       axis.text.y = element_blank(),
       panel.grid.minor = element_blank(),
       legend.position = "none"
@@ -125,7 +125,7 @@ fileName <- paste0(
   ggplot2::ggsave(
     file.path("figures", fileName), 
     plot = res,
-    dpi = 600,
-    width = 9, 
-    height = 3.8
+    dpi = 1200,
+    width = 10, 
+    height = 7
   )

@@ -53,6 +53,7 @@ titles <- scenarioIds %>%
 
 names(titles) <- NULL
 
+
 metricFile <- paste(metric, "csv", sep = ".")
 
 f <- function(x) x * 100
@@ -80,33 +81,22 @@ names(scenarios) <- NULL
 
 plotList <- plotResult(scenarios, processed, titles, metric = metric, limits = c(0, 6, 1))
 
-left.grob <- grid::textGrob(
-    expression(
-      paste(
-        "Integrated calibration index (x",
-        10^-2,
-        ")"
-      )
-    ),
-    rot = 90
-)
-
 res <- gridExtra::grid.arrange(
   plotList[[1]] +
     theme(
-      plot.title = element_text(size = 7),
+      plot.title = element_text(size = 12),
       axis.title = element_blank(),
       legend.direction = "horizontal",
-      legend.title = element_text(size = 5.5),
-      legend.text = element_text(size = 5),
-      legend.position = c(.325, .862),
+      legend.title = element_text(size = 8.5),
+      legend.text = element_text(size = 7.5),
+      legend.position = c(.375, .912),
       panel.grid.minor = element_blank(),
       axis.text.x = element_blank(),
-      axis.text.y = element_text(size = 6)
+      axis.text.y = element_text(size = 9)
     ),
   plotList[[2]] +
     theme(
-      plot.title = element_text(size = 7),
+      plot.title = element_text(size = 12),
       axis.title = element_blank(),
       axis.text.x = element_blank(),
       axis.text.y = element_blank(),
@@ -115,18 +105,18 @@ res <- gridExtra::grid.arrange(
     ),
   plotList[[3]] +
     theme(
-      plot.title = element_text(size = 7),
+      plot.title = element_text(size = 12),
       axis.title = element_blank(),
-      axis.text.x = element_text(size = 6),
-      axis.text.y = element_text(size = 6),
+      axis.text.x = element_text(size = 9),
+      axis.text.y = element_text(size = 9),
       panel.grid.minor = element_blank(),
       legend.position = "none"
     ),
   plotList[[4]] +
     theme(
-      plot.title = element_text(size = 7),
+      plot.title = element_text(size = 12),
       axis.title = element_blank(),
-      axis.text.x = element_text(size = 6),
+      axis.text.x = element_text(size = 9),
       axis.text.y = element_blank(),
       panel.grid.minor = element_blank(),
       legend.position = "none"
@@ -134,7 +124,21 @@ res <- gridExtra::grid.arrange(
   heights = c(1, 1.05),
   nrow = 2,
   ncol = 2,
-  left = left.grob
+  left = grid::textGrob(
+    expression(
+      paste(
+        "Calibration for benefit (x",
+        10^-2,
+        ")"
+      )
+    ),
+    rot = 90
+  ),
+  bottom = grid::textGrob(
+    "Method",
+    just = "center",
+    gp = grid::gpar(fontsize = 10)
+  )
 )
 
 fileName <- paste0(
@@ -149,7 +153,15 @@ fileName <- paste0(
   ggplot2::ggsave(
     file.path("figures", fileName), 
     plot = res,
-    dpi = 600,
-    width = 9, 
-    height = 3.8
+    dpi = 1200,
+    width = 10, 
+    height = 7
   )
+  
+  # ggplot2::ggsave(
+  #   file.path("figures", fileName), 
+  #   plot = pp,
+  #   width = 8.5, 
+  #   height = 7
+  # )
+  

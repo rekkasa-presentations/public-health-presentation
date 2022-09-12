@@ -64,17 +64,6 @@ titles <- scenarioIds %>%
 
 names(titles) <- NULL
 
-titlePrefix <- paste0(
-  "**",
-  LETTERS[1:5],
-  ".**"
-)
-
-# titles <- paste(
-#   titlePrefix,
-#   titles
-# )
-
 
 metricFile <- paste(metric, "csv", sep = ".")
 
@@ -102,6 +91,25 @@ processed <- readr::read_csv(
     f
   )
 
+# ----------------------------------
+# Create the absolute benefit plots
+# ----------------------------------
+absolutePlots <- scenarioIds %>%
+  filter(harm != "negative") %>%
+  group_by(type) %>%
+  nest() %>%
+  mutate(
+    plot = map2(
+      data,
+      type,
+      ~ plotAbsoluteBenefit(
+      data = .x,
+      projectDir = "~/Documents/Projects/arekkas_HteSimulation_XXXX_2021",
+      type = .y
+      )
+    )
+  )
+
 # --------------------
 # Create the boxplots
 # --------------------
@@ -124,23 +132,57 @@ gridList <- list(
   plotList[[1]] +
     theme(
       panel.grid.minor = element_blank(),
-      plot.title = element_text(size = 7),
+      plot.title = element_text(size = 9),
       axis.title.x = ggplot2::element_blank(),
       axis.title.y = ggplot2::element_blank(),
-      axis.text.x = element_blank(),
-      axis.text.y = element_text(size = 6),
+      # axis.text.x = element_blank(),
+      axis.text.x = element_text(size = 8),
+      axis.text.y = element_text(size = 8),
       legend.direction = "horizontal",
-      legend.title = element_text(size = 5.5),
-      legend.text = element_text(size = 5),
-      legend.position = c(.331, .862)
+      legend.title = element_text(size = 7.5),
+      legend.text = element_text(size = 7),
+      legend.position = c(.273, .848)
+    ),
+  absolutePlots$plot[[1]] +
+    ggtitle("Simulated absolute benefit in treated patients") +
+    xlim(c(0, .5)) +
+    scale_y_continuous(
+      position = "right",
+      limits = c(-.058, limitsHigh),
+      breaks = seq(-.05, limitsHigh, .05)
+    ) +
+  scale_color_manual(
+      name = "Constant treatment-\n related harm",
+      values = c(
+        "#26547C",
+        "#06D6A0",
+        "#EF476F"
+      )
+    ) +
+    theme_bw() +
+    theme(
+      panel.grid.minor = element_blank(),
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      # axis.text.x = element_blank(),
+      axis.text.x = element_text(size = 8),
+      axis.text.y = element_text(size = 8),
+      ggside.line = element_blank(),
+      ggside.rect = element_blank(),
+      ggside.axis.text = element_blank(),
+      ggside.axis.ticks.length = unit(0, "pt"),
+      ggside.panel.scale = .07,
+      plot.title = element_text(size = 9),
+      legend.position = "none"
     ),
   plotList[[2]] + 
     theme(
       panel.grid.minor = element_blank(),
-      plot.title = element_text(size = 7),
+      plot.title = element_text(size = 9),
       axis.title = element_blank(),
-      axis.text.x = element_blank(),
-      axis.text.y = element_blank(),
+      # axis.text.x = element_blank(),
+      axis.text.x = element_text(size = 8),
+      axis.text.y = element_text(size = 8),
       ggside.line = element_blank(),
       ggside.rect = element_blank(),
       ggside.axis.text = element_blank(),
@@ -148,23 +190,119 @@ gridList <- list(
       ggside.panel.scale = .07,
       legend.position = "none"
     ),
+  absolutePlots$plot[[2]] +
+    ggtitle("True absolute benefit in treatment arm") +
+    xlim(c(0, .5)) +
+    scale_y_continuous(
+      position = "right",
+      limits = c(-.058, limitsHigh),
+      breaks = seq(-.05, limitsHigh, .05)
+    ) +
+    scale_color_manual(
+      name = "Constant treatment-\n related harm",
+      values = c(
+        "#26547C",
+        "#06D6A0",
+        "#EF476F"
+      )
+    ) +
+    theme_bw() +
+    theme(
+      panel.grid.minor = element_blank(),
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      # axis.text.x = element_blank(),
+      axis.text.x = element_text(size = 8),
+      axis.text.y = element_text(size = 8),
+      ggside.line = element_blank(),
+      ggside.rect = element_blank(),
+      ggside.axis.text = element_blank(),
+      ggside.axis.ticks.length = unit(0, "pt"),
+      ggside.panel.scale = .07,
+      plot.title = element_text(size = 9, color = "white"),
+      legend.position = "none"
+    ),
   plotList[[3]] +
     theme(
       panel.grid.minor = element_blank(),
-      plot.title = element_text(size = 7),
+      plot.title = element_text(size = 9),
       axis.title = element_blank(),
-      axis.text.x = element_text(size = 6),
-      axis.text.y = element_text(size = 6),
+      # axis.text.x = element_blank(),
+      axis.text.x = element_text(size = 8),
+      legend.position = "none"
+    ),
+  absolutePlots$plot[[3]] +
+    ggtitle("True absolute benefit in treatment arm") +
+    xlim(c(0, .5)) +
+    scale_y_continuous(
+      position = "right",
+      limits = c(-.058, limitsHigh),
+      breaks = seq(-.05, limitsHigh, .05)
+    ) +
+    scale_color_manual(
+      name = "Constant treatment-\n related harm",
+      values = c(
+        "#26547C",
+        "#06D6A0",
+        "#EF476F"
+      )
+    ) +
+    theme_bw() +
+    theme(
+      panel.grid.minor = element_blank(),
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      axis.text.y = element_text(size = 8),
+      # axis.text.x = element_blank(),
+      axis.text.x = element_text(size = 8),
+      ggside.line = element_blank(),
+      ggside.rect = element_blank(),
+      ggside.axis.text = element_blank(),
+      ggside.axis.ticks.length = unit(0, "pt"),
+      ggside.panel.scale = .07,
+      plot.title = element_text(size = 9, color = "white"),
       legend.position = "none"
     ),
   plotList[[4]] +
     theme(
       panel.grid.minor = element_blank(),
       axis.title = element_blank(),
-      axis.text.x = element_text(size = 6),
-      axis.text.y = element_blank(),
+      # axis.text.x = element_text(size = 8),
+      axis.text.x = element_text(size = 8),
+      axis.text.y = element_text(size = 8),
       legend.position = "none",
-      plot.title = element_text(size = 7)
+      plot.title = element_text(size = 9)
+    ),
+  absolutePlots$plot[[4]] +
+    ggtitle("Simulated absolute benefit in treatment arm") +
+    xlim(c(0, .5)) +
+    scale_y_continuous(
+      position = "right",
+      limits = c(-.058, limitsHigh),
+      breaks = seq(-.05, limitsHigh, .05)
+    ) +
+    scale_color_manual(
+      name = "Constant treatment-\n related harm",
+      values = c(
+        "#26547C",
+        "#06D6A0",
+        "#EF476F"
+      )
+    ) +
+    theme_bw() +
+    theme(
+      panel.grid.minor = element_blank(),
+      axis.title.x = element_blank(),
+      axis.text.x = element_text(size = 8),
+      axis.text.y = element_text(size = 8),
+      axis.title.y = element_blank(),
+      ggside.line = element_blank(),
+      ggside.rect = element_blank(),
+      ggside.axis.text = element_blank(),
+      ggside.axis.ticks.length = unit(0, "pt"),
+      ggside.panel.scale = .07,
+      plot.title = element_text(size = 9, color = "white"),
+      legend.position = "none"
     )
 )
 
@@ -173,7 +311,12 @@ pp <- cowplot::plot_grid(
   gridList[[2]],
   gridList[[3]],
   gridList[[4]],
-  ncol = 2
+  gridList[[5]],
+  gridList[[6]],
+  gridList[[7]],
+  gridList[[8]],
+  ncol = 2,
+  rel_widths = c(1, .5)
 )
 
 left.grob <- grid::textGrob(
@@ -187,9 +330,31 @@ left.grob <- grid::textGrob(
     rot = 90
 )
 
+right.grob <- grid::textGrob(
+    "Absolute benefit",
+    rot = 270
+)
 
+bottom.left.grob <- grid::textGrob(
+  "Method",
+  just = "center",
+  gp = gpar(fontsize = 10)
+)
 
-res <- grid.arrange(arrangeGrob(pp, left = left.grob))
+bottom.right.grob <- grid::textGrob(
+  "Baseline risk",
+  just = "center",
+  gp = gpar(fontsize = 10)
+)
+
+bottom.grob <- grid.arrange(
+  bottom.left.grob,
+  bottom.right.grob,
+  nrow = 1,
+  widths = c(2, 1)
+)
+
+res <- grid.arrange(arrangeGrob(pp, left = left.grob, right = right.grob, bottom = bottom.grob))
 
 fileName <- paste0(
   paste(
@@ -203,8 +368,8 @@ fileName <- paste0(
   ggplot2::ggsave(
     file.path("figures", fileName), 
     plot = res,
-    dpi = 600,
-    width = 9, 
-    height = 3.8
+    dpi = 1200,
+    width = 10, 
+    height = 8
   )
   

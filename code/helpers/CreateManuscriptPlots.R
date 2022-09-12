@@ -59,7 +59,7 @@ createPlot <- function(
       fatten = .9
     ) +
     ggplot2::scale_fill_manual(
-      name = "Constant treatment-\n related harm",
+      name = "Treatment-related \n harm",
       values = c(
         "#26547C",
         "#06D6A0",

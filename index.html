@@ -4,12 +4,11 @@
     <title>Individualized treatment effect was predicted best by modeling baseline risk in interaction with treatment assignment</title>
     <meta charset="utf-8" />
     <meta name="author" content="Alexandros Rekkas" />
-    <meta name="date" content="2022-03-14" />
+    <meta name="date" content="2022-09-12" />
     <script src="libs/header-attrs-2.13/header-attrs.js"></script>
-    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
-    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
     <link href="libs/panelset-0.2.6/panelset.css" rel="stylesheet" />
     <script src="libs/panelset-0.2.6/panelset.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -18,12 +17,35 @@ class: center, middle, inverse, title-slide
 # Individualized treatment effect was predicted best by modeling baseline risk in interaction with treatment assignment
 ### Alexandros Rekkas
 ### Department of Medical Informatics, EMC
-### 2022-03-14
+### 2022-09-12
 
 ---
 
 
 
+
+
+
+
+# Subgroup analyses
+
+.panelset[
+.panel[.panel-name[General]
+* Generalizing overall treatment effects is often problematic
+* Subgroup analyses often not adequatel-powered
+]
+.panel[.panel-name[Categories]
+
+Heterogeneity of treatment effect (HTE) analyses can be one of:
+* Confirmatory
+* Exploratory
+* Descriptive
+* **Predictive**
+
+]
+]
+
+---
 
 # Predictive approaches to HTE
 
@@ -68,57 +90,70 @@ class: center middle
 # Settings
 
 .panelset[
+.panel[.panel-name[Notation]
+We observe data `\((Z, X, Y)\)` where:
+* `\(Z_i=0,\ 1\)` treatment indicator
+* `\(Y_i=0,\ 1\)` outcome
+* `\(X_i\)` measured covariates
+
+Let `\(\{Y_i(z), z=0,\ 1\}\)` denote the potential outcomes
+
+&lt;br&gt;
+
+We want to estimate:
+
+$$
+`\begin{aligned}
+\tau(x) &amp;= E\{Y(0)\ |\ X = x\} - E\{Y(1)\ |\ X = x\} \\
+&amp; = E\{Y\ |\ X=x, Z=0\} - E\{Y\ |\ X=x, Z=1\}
+\end{aligned}`
+$$
+
+`$$\newcommand{\indep}{\perp \!\!\! \perp}$$`
+
+since `\((Y(0), Y(1)) \indep Z\ |\ X\)`
+
+]
 .panel[.panel-name[Patients]
-For each patient we simulated 8 baseline covariates:
-- `\(X_1, \dots, X_4\)` were continuous (standard normal) 
-- `\(X_5,\dots,X_8\)` were binary with 20% prevalence 
-- Treatment ( `\(T\)` ) was allocated using a 50:50 split
+We observe `\(x_1,\dots,x_8\)`, of which `\(4\)` are continuous and `\(4\)` are binary
+
+`$$x_1,\dots,x_4 \sim N(0, 1)$$`
+`$$x_5,\dots,x_8 \sim B(1, 0.2)$$`
+
+.panel[.panel-name[Controls]
+True probabilities if left untreated:
+
+`$$\newcommand\given[1][]{\:#1\vert\:}$$`
+`$$P(Y(0) = 1\given X=x) = \text{expit}(lp_0) = \frac{e^{lp_0}}{1 + e^{lp_0}}$$`
+
+where `\(lp_0=lp_0(x)=x^t\beta\)`
+]
+]
+.panel[.panel-name[Treated]
+True probabilities if treated:
+
+`$$P(Y(1) = 1\given X=x) = \text{expit}(lp_1) + harm$$`
+
+where `\(lp_1 = \gamma_0 + \gamma_1(lp_0-c)+\gamma_2(lp_0-c)^2\)`
+]
+
+.panel[.panel-name[Scenarios]
+* Overall treatment effects: Absent `\((OR=1)\)`, moderate `\((OR = 0.8)\)`, strong `\((OR=0.5)\)`
+* Sample size: `\(N = 4250,\ 1063,\ 17000\)`
+* c-statistic of prediction model: `\(0.75,\ 0.65,\ 0.85\)`
+* Evolution of treatment effect:
+  * constant
+  * linear deviations (moderate, strong)
+  * quadratic deviations (moderate, strong)
+  * non-monotonic deviations
+* Treatment-related harms: absent, moderate, strong, negative
 
 &lt;br&gt;
-
-.pull-left[
-For the _base-case_ scenario:
-- N = 4,250
-]
-
-.pull-right[
-_Deviation_ scenarios:
-- Smaller sample size (N = 1,063)
-- Larger sample size (N = 17,000)
-]
-]
-.panel[.panel-name[Baseline risk]
-.pull-left[
-For the _base-case_ scenario
-- AUC: 0.75
-- Event rate: 20%
-]
-.pull-right[
-_Deviation_ scenarios:
-- High AUC (0.85)
-- Low AUC (0.65)
-- Event rate: fixed at 20%
-]
-&lt;br&gt;
-&lt;br&gt;
 &lt;br&gt;
 
-&gt; &amp;#9964; All covariates were risk factors &lt;br&gt;
-&gt;
-&amp;#9964; In all simulation runs a correctly-specified logistic regression model was used
-&gt;
-
+Total `\(3\times 3\times 3\times 6\times 4 = 648\)` simulation scenarios
 ]
-.panel[.panel-name[Treatment effect]
-_Base-case_ scenario: constant relative treatment effect (OR = 0.8)
 
-&lt;br&gt;
-
-_Deviation_ scenarios:
-- Effect size (absent, stronger)
-- Linear and non-linear deviations
-- Treatment-related harms
-]
 ]
 
 ---
@@ -156,53 +191,55 @@ _Deviation_ scenarios:
 
 # Methods to individualize
 
-* A constant treatment effect
-
-&lt;br&gt;
-
-* Stratification
-
-&lt;br&gt;
-
-* Linear interaction of treatment with the linear predictor
-
-&lt;br&gt;
-
-* Interaction of treatment with the linear predictor using restricted cubic splines
-
-&lt;br&gt;
-
-* Adaptive approach using AIC
-
----
-
-# GUSTO-I
-
 .panelset[
-.panel[.panel-name[Data]
-* Total of 30,510 patients with MI
-* 10,348 patients randomized to tissue plasminogen activator (tPA)
-* 20,162 patients randomized to streptokinase
-* _Outcome_: 30-day mortality
+.panel[.panel-name[Risk model]
+Merging treatment arms, we develop prediction models including a constant relative treatment effect:
+
+`$$P(Y=1\given X=x,Z=z) = g(x^t\beta + \delta_0 z)$$`
+
+We derive baseline risk predictions for patients by setting `\(Z=0\)`.
 
 &lt;br&gt;
+&lt;br&gt;
 
-* Logistic regression model with 6 covariates:
-  * age
-  * Killip class
-  * systolic blood pressure
-  * heart rate
-  * previous MI
-  * location of MI
+The estimated linear predictor of this model is
 
-]
-.panel[.panel-name[Predicted benefit]
-&lt;img src="figures/gusto.png" width="5600" height="100%" /&gt;
-]
-]
+`$$\hat{lp} = lp(x;\hat{\beta}) = x^t\hat{\beta}$$`
 
+We make individualized predictions from:
+`$$\tau(x;\hat{\beta}) = g(f(\hat{lp}, 0)) - g(f(\hat{lp}, 1))$$`
+]
+.panel[.panel-name[Constant]
+Constant treatment effect model:
+`$$f(\hat{lp}, z) = \hat{lp} + \delta_0z$$`
+with `\(\hat{\delta}_0\)` the estimated relative treatment effect (log odds ratio).
+]
+.panel[.panel-name[Linear interaction]
+Linear interaction of treatment with the linear predictor:
+
+$$ f(\hat{lp}, z) = \delta_0+\delta_1z+\delta_2\hat{lp}+\delta_3z\hat{lp} $$
+]
+.panel[.panel-name[Smooth]
+Predict absolute benefit using smoothing with restricted cubic splines with
+`\(k=3, 4\)` and `\(5\)` knots:
+
+$$ f(\hat{lp}, z) = \delta_0 + \delta_1z+zs(\hat{lp}) $$
+where
+
+`$$s(x)=\alpha_0+\alpha_1h_1(x)+\alpha_2h_2(x)+\dots+\alpha_{k-1}h_{k-1}(x)$$`
+
+with `\(h_1(x)=x\)` and for `\(j=2,\dots,k-2\)`
+`$$h_{j+1}(x)= (x-t_j)^3-(x-t_{k-1})_+^3 \frac{t_k-t_j}{t_k-t_{k-1}}+(x-t_k)^3_+\frac{t_{k-1}-t_j}{t_k-t_{k-1}}$$`
+where 
+`\(t_1,\dots,t_k\)` are the selected knots for the restricted cubic splines
+]
+.panel[.panel-name[Adaptive]
+* Adaptive approach using AIC
+]
+]
 
 ---
+
 
 # Evaluation metrics
 
@@ -227,17 +264,30 @@ _Deviation_ scenarios:
 
 ---
 
+
+class: center middle
+
+# Results
+
+---
+
 # Results (RMSE)
 
 .panelset[
 .panel[.panel-name[Base]
-&lt;img src="figures/rmse_moderate_base.png" width="7200" height="100%" /&gt;
+.center[
+&lt;img src="figures/rmse_moderate_base.png" width="50%" /&gt;
+]
 ]
 .panel[.panel-name[AUC]
-&lt;img src="figures/rmse_moderate_auc.png" width="7200" height="100%" /&gt;
+.center[
+&lt;img src="figures/rmse_moderate_auc.png" width="50%" /&gt;
+]
 ]
 .panel[.panel-name[Sample size]
-&lt;img src="figures/rmse_moderate_sample_size.png" width="7200" height="100%" /&gt;
+.center[
+&lt;img src="figures/rmse_moderate_sample_size.png" width="50%" /&gt;
+]
 ]
 ]
 
@@ -247,13 +297,19 @@ _Deviation_ scenarios:
 
 .panelset[
 .panel[.panel-name[Base]
-&lt;img src="figures/discrimination_moderate_base.png" width="7200" height="100%" /&gt;
+.center[
+&lt;img src="figures/discrimination_moderate_base.png" width="58%" /&gt;
+]
 ]
 .panel[.panel-name[AUC]
-&lt;img src="figures/discrimination_moderate_auc.png" width="7200" height="100%" /&gt;
+.center[
+&lt;img src="figures/discrimination_moderate_auc.png" width="58%" /&gt;
+]
 ]
 .panel[.panel-name[Sample size]
-&lt;img src="figures/discrimination_moderate_sample_size.png" width="7200" height="100%" /&gt;
+.center[
+&lt;img src="figures/discrimination_moderate_sample_size.png" width="58%" /&gt;
+]
 ]
 ]
 
@@ -263,15 +319,64 @@ _Deviation_ scenarios:
 
 .panelset[
 .panel[.panel-name[Base]
-&lt;img src="figures/calibration_moderate_base.png" width="7200" height="100%" /&gt;
+
+.center[
+&lt;img src="figures/calibration_moderate_base.png" width="58%" /&gt;
+]
 ]
 .panel[.panel-name[AUC]
-&lt;img src="figures/calibration_moderate_auc.png" width="7200" height="100%" /&gt;
+.center[
+&lt;img src="figures/calibration_moderate_auc.png" width="58%" /&gt;
+]
 ]
 .panel[.panel-name[Sample size]
-&lt;img src="figures/calibration_moderate_sample_size.png" width="7200" height="100%" /&gt;
+.center[
+&lt;img src="figures/calibration_moderate_sample_size.png" width="58%" /&gt;
 ]
 ]
+]
+
+---
+
+class: center middle
+
+# Data application
+
+---
+
+# GUSTO-I
+
+.panelset[
+.panel[.panel-name[Data]
+* Total of 30,510 patients with MI
+* 10,348 patients randomized to tissue plasminogen activator (tPA)
+* 20,162 patients randomized to streptokinase
+* _Outcome_: 30-day mortality
+
+&lt;br&gt;
+
+* Logistic regression model with 6 covariates:
+  * age
+  * Killip class
+  * systolic blood pressure
+  * heart rate
+  * previous MI
+  * location of MI
+
+]
+.panel[.panel-name[Predicted benefit]
+.center[
+&lt;img src="figures/gusto.png" width="58%" /&gt;
+]
+]
+]
+
+---
+
+class: center middle
+
+# Conclusions
+
 
 ---
 

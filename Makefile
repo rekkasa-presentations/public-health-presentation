@@ -72,7 +72,8 @@ figures/calibration_moderate_auc.png : code/CalibrationBase.R\
 	$< moderate 4250 0.85 auc
 
 figures/gusto.png : code/GustoPlot.R\
-	data/raw/gusto.rda
+	data/raw/gusto.rda\
+	data/processed/bootstrapData.csv
 	$<
 
 index.html : index.Rmd\

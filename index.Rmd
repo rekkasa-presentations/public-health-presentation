@@ -1,8 +1,5 @@
 ---
-title: "Individualized treatment effect was predicted best by modeling baseline risk in interaction with treatment assignment"
-author: "Alexandros Rekkas "
-institute: "Department of Medical Informatics, EMC"
-date: "`r Sys.Date()`"
+title: "Estimating individualized treatment effects from randomized controlled trials: a simulation study to compare risk-based approaches"
 output:
   xaringan::moon_reader:
     css: xaringan-themer.css

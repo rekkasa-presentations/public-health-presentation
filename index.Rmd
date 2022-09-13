@@ -314,6 +314,27 @@ knitr::include_graphics("figures/rmse_moderate_sample_size.png")
 
 ---
 
+# Results (Adaptive selection)
+
+.panelset[
+.panel[.panel-name[Base]
+.center[
+```{r, eval=TRUE, cache = FALSE, echo=FALSE, out.width = '68%'}
+knitr::include_graphics("figures/selected_model_adaptive_base.png")
+```
+]
+]
+.panel[.panel-name[Sample size]
+.center[
+```{r, eval=TRUE, cache = FALSE, echo=FALSE, out.width = '68%'}
+knitr::include_graphics("figures/selected_model_adaptive_sample_size.png")
+```
+]
+]
+]
+
+---
+
 # Results (Discrimination)
 
 .panelset[

@@ -104,10 +104,10 @@ p <- ggplot2::ggplot(
   ylab("Model selection rate") +
   theme_classic() +
   theme(
-    axis.title       =  element_text(size = 12),
-    axis.text        =  element_text(size = 8),
-    strip.text       =  element_text(size = 12),
-    strip.background = element_blank() ,
+    axis.title       =  element_text(size = 14),
+    axis.text        =  element_text(size = 12),
+    strip.text       =  element_text(size = 14),
+    strip.background = element_blank(),
     legend.title     = element_blank(),
     legend.text      = element_text(size = 12)
   ) 
@@ -118,14 +118,13 @@ fileToSave <- paste0(
     args_value,
     sep = "_"
   ),
-  ".tiff"
+  ".png"
 )
 
 ggsave(
   file.path("figures", fileToSave),
   p, 
-  compression = "lzw", 
-  width       = 297, 
+  width       = 350, 
   height      = 210,
   units       = "mm",
   dpi         = 300

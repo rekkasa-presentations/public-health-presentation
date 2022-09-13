@@ -76,6 +76,16 @@ figures/gusto.png : code/GustoPlot.R\
 	data/processed/bootstrapData.csv
 	$<
 
+figures/selected_model_adaptive_base.png : code/SelectedModelAdaptive.R\
+	data/processed/analysisIds.csv\
+	data/processed/adaptiveModel.csv
+	$< moderate 4250 0.75 base
+
+figures/selected_model_adaptive_sample_size.png : code/SelectedModelAdaptive.R\
+	data/processed/analysisIds.csv\
+	data/processed/adaptiveModel.csv
+	$< moderate 17000 0.75 sample_size
+
 index.html : index.Rmd\
   figures/gusto.png\
   figures/rmse_moderate_base.png\
@@ -87,5 +97,6 @@ index.html : index.Rmd\
   figures/discrimination_moderate_sample_size.png\
   figures/calibration_moderate_base.png\
   figures/calibration_moderate_auc.png\
-  figures/calibration_moderate_sample_size.png
+  figures/calibration_moderate_sample_size.png\
+  figures/selected_model_adaptive_base.png
 	R -e 'rmarkdown::render("index.Rmd", output_format = "all")'

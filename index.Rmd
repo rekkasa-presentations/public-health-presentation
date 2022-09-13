@@ -18,7 +18,8 @@ style_mono_accent(
   base_color = "#353A47",
   header_font_google = google_font("Candal"),
   text_font_google   = google_font("Sanchez", "300", "300i"),
-  code_font_google   = google_font("Fira Mono")
+  code_font_google   = google_font("Fira Mono"),
+  link_color = "#1D785B"
 )
 ```
 
@@ -32,7 +33,7 @@ xaringanExtra::use_panelset()
 .panelset[
 .panel[.panel-name[General]
 * Generalizing overall treatment effects is often problematic
-* Subgroup analyses often not adequatel-powered
+* Subgroup analyses often not adequately-powered
 ]
 .panel[.panel-name[Categories]
 
@@ -61,7 +62,7 @@ Heterogeneity of treatment effect (HTE) analyses can be one of:
 
 - Two-step approaches:
   - Prediction of baseline risk
-  - Evalution of treatment effect within risk strata
+  - Evaluation of treatment effect within risk strata
 ]
 .panel[.panel-name[Treatment effect modeling]
 - Reference: Risk factors and effect modifiers
@@ -224,7 +225,6 @@ $$\tau(x;\hat{\beta}) = g(f(\hat{lp}, 0)) - g(f(\hat{lp}, 1))$$
 .panel[.panel-name[Constant]
 Constant treatment effect model:
 $$f(\hat{lp}, z) = \hat{lp} + \delta_0z$$
-with $\hat{\delta}_0$ the estimated relative treatment effect (log odds ratio).
 ]
 .panel[.panel-name[Linear interaction]
 Linear interaction of treatment with the linear predictor:
@@ -454,9 +454,9 @@ class: center middle
 # Links
 
 * All the code for the simulations can be found at:
-https://github.com/rekkasa/arekkas_HteSimulation_XXXX_2021
+> https://github.com/mi-erasmusmc/HteSimulationRCT
 
 <br>
 
 * All the simulation results can be explored using a shiny application:
-https://arekkas.shinyapps.io/simulation_viewer/
+> https://mi-erasmusmc.shinyapps.io/HteSimulationRCT/

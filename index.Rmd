@@ -293,17 +293,17 @@ knitr::include_graphics("figures/rmse_moderate_base.png")
 ```
 ]
 ]
-.panel[.panel-name[AUC]
-.center[
-```{r, eval=TRUE, cache = FALSE, echo=FALSE, out.width = '50%'}
-knitr::include_graphics("figures/rmse_moderate_auc.png")
-```
-]
-]
 .panel[.panel-name[Sample size]
 .center[
 ```{r, eval=TRUE, cache = FALSE, echo=FALSE, out.width = '50%'}
 knitr::include_graphics("figures/rmse_moderate_sample_size.png")
+```
+]
+]
+.panel[.panel-name[AUC]
+.center[
+```{r, eval=TRUE, cache = FALSE, echo=FALSE, out.width = '50%'}
+knitr::include_graphics("figures/rmse_moderate_auc.png")
 ```
 ]
 ]
@@ -342,17 +342,17 @@ knitr::include_graphics("figures/discrimination_moderate_base.png")
 ```
 ]
 ]
-.panel[.panel-name[AUC]
-.center[
-```{r, eval=TRUE, cache = FALSE, echo=FALSE, out.width = '58%'}
-knitr::include_graphics("figures/discrimination_moderate_auc.png")
-```
-]
-]
 .panel[.panel-name[Sample size]
 .center[
 ```{r, eval=TRUE, cache = FALSE, echo=FALSE, out.width = '58%'}
 knitr::include_graphics("figures/discrimination_moderate_sample_size.png")
+```
+]
+]
+.panel[.panel-name[AUC]
+.center[
+```{r, eval=TRUE, cache = FALSE, echo=FALSE, out.width = '58%'}
+knitr::include_graphics("figures/discrimination_moderate_auc.png")
 ```
 ]
 ]
@@ -371,17 +371,17 @@ knitr::include_graphics("figures/calibration_moderate_base.png")
 ```
 ]
 ]
-.panel[.panel-name[AUC]
-.center[
-```{r, eval=TRUE, cache = FALSE, echo=FALSE, out.width = '58%'}
-knitr::include_graphics("figures/calibration_moderate_auc.png")
-```
-]
-]
 .panel[.panel-name[Sample size]
 .center[
 ```{r, eval=TRUE, cache = FALSE, echo=FALSE, out.width = '58%'}
 knitr::include_graphics("figures/calibration_moderate_sample_size.png")
+```
+]
+]
+.panel[.panel-name[AUC]
+.center[
+```{r, eval=TRUE, cache = FALSE, echo=FALSE, out.width = '58%'}
+knitr::include_graphics("figures/calibration_moderate_auc.png")
 ```
 ]
 ]
@@ -447,7 +447,7 @@ class: center middle
 
 <br>
 
-* An adaptive AIC approach is a viable option with larger sample sizes---quite conservative with smaller samples
+* An adaptive AIC approach is a viable option with larger sample sizes&#151;quite conservative with smaller samples
 
 ---
 
